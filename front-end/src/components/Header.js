@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 export const Header = () => {
     return (
         <div>
-            <nav className="navbar navbar-light bg-info">
+            <nav className="navbar bg-transparent text-white bg-info">
                 <div className="container-fluid ">
                     <Link to="/" className='nav-link'>
-                        <span className="navbar-brand mb-0 h1 ms-5">Health Hub</span>
+                        <span className="navbar-brand mb-0 h1 ms-5 text-white">Health Hub</span>
                     </Link>
                     <div className='d-flex flex-row'>
                         <Link to='/login' className='p-2 nav-link'>Login</Link>

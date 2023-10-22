@@ -1,0 +1,15 @@
+.video{
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    opacity: 0.9;
+}
+.margin{
+    margin-top: 150px;
+    padding: 50px;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
