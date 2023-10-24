@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 export const Header = () => {
     return (
-        <div>
-            <nav className="navbar bg-transparent text-white bg-info">
+        <div >
+            <nav className="navbar header text-white">
                 <div className="container-fluid ">
                     <Link to="/" className='nav-link'>
                         <span className="navbar-brand mb-0 h1 ms-5 text-white">Health Hub</span>

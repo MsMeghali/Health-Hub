@@ -48,10 +48,10 @@ public class HomeController {
 
     @PostMapping("/register/patient")
     @ResponseBody
-    public String patientRegistration(@RequestBody Patient details) {
+    public ResponseEntity<String> patientRegistration(@RequestBody Patient details) {
         Patient patient = new Patient(details.getPid(), details.getName(), details.getMobile(), details.getAadhar(), details.getDob(), details.getAddress(), details.getCity(), new ArrayList<>());
         patient.setEmail(details.getEmail());
         patient.setPassword(details.getPassword());
-        return patientService.registerPatient(patient);
+        return new ResponseEntity<>(patientService.registerPatient(patient),HttpStatus.OK);
     }
 }
