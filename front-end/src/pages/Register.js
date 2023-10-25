@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export const Register = () => {
+export const Register = ({ activeUser, setActiveUser }) => {
     const [user, doRegister]=useState({
         email:"",
         password:"",
@@ -45,13 +45,20 @@ export const Register = () => {
     }
     function handleRegister(e) {
         e.preventDefault();
+        console.log(user)
         fetch("http://localhost:8080/health-hub/register/patient", {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        }).then(e=>e.text()).then(e=>alert(e));
+                'Accept': 'application/json, text/plain, */*',
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        }).then(e=>e.text()).then(e=>{
+            alert(e);
+            if (e ==="Successfully registered"){
+                setActiveUser({ type: "patient", id: user.pid, name: user.name })
+            }
+        });
 
     }
     return (

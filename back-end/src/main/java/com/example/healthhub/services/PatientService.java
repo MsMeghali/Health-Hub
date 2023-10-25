@@ -21,47 +21,50 @@ public class PatientService {
     private PatientRepository patientRepository;
     @Autowired
     private ConsultationRepository consultationRepository;
-    public Patient findById(int id){
 
-         Optional<Patient> p=patientRepository.findById(id);
-        Patient patient=p.isPresent()?p.get():null;
+    public Patient findById(int id) {
+
+        Optional<Patient> p = patientRepository.findById(id);
+        Patient patient = p.isPresent() ? p.get() : null;
         return patient;
 
     }
-    public PatientConsultationDto findByIdAndGroupByDoctor(int id){
-        Optional<Patient> p=patientRepository.findById(id);
-        Patient patient=p.isPresent()?p.get():null;
-        if(patient==null){
+
+    public PatientConsultationDto findByIdAndGroupByDoctor(int id) {
+        Optional<Patient> p = patientRepository.findById(id);
+        Patient patient = p.isPresent() ? p.get() : null;
+        if (patient == null) {
             return null;
         }
-        List<Consultation> consultations= consultationRepository.findByPatientId(id);
-        HashMap<Doctor, List<Consultation>> map=new HashMap<>();
-        consultations.stream().forEach((c)->{
-            if(map.containsKey(c.getDoctor())){
+        List<Consultation> consultations = consultationRepository.findByPatientId(id);
+        HashMap<Doctor, List<Consultation>> map = new HashMap<>();
+        consultations.stream().forEach((c) -> {
+            if (map.containsKey(c.getDoctor())) {
                 map.get(c.getDoctor()).add(c);
-            }
-            else{
-                List<Consultation> list=new ArrayList<>();
+            } else {
+                List<Consultation> list = new ArrayList<>();
                 list.add(c);
-                map.put(c.getDoctor(),list);
+                map.put(c.getDoctor(), list);
             }
         });
-        List<Consultation> patientConsultations=new ArrayList<>();
-        for (Doctor d: map.keySet() ){
+        List<Consultation> patientConsultations = new ArrayList<>();
+        for (Doctor d : map.keySet()) {
             patientConsultations.addAll(map.get(d));
         }
-        return new PatientConsultationDto(patient,patientConsultations);
+        return new PatientConsultationDto(patient, patientConsultations);
     }
 
-    public Optional<Patient> getByEmailAndPassword(String email, String password){
-        return patientRepository.findByEmailAndPassword(email,password);
+    public Optional<Patient> getByEmailAndPassword(String email, String password) {
+        return patientRepository.findByEmailAndPassword(email, password);
     }
 
-    public String registerPatient(Patient p){
-        if(patientRepository.findById(p.getPid()).isPresent()){
+    public String registerPatient(Patient p) {
+        if (patientRepository.findById(p.getPid()).isPresent()
+                || patientRepository.findByEmail(p.getEmail()).isPresent()
+                || patientRepository.findByAadhar(p.getAadhar()).isPresent()
+                || patientRepository.findByMobile(p.getMobile()).isPresent()) {
             return "Patient already Exist";
-        }
-        else{
+        } else {
             patientRepository.save(p);
             return "Successfully registered";
         }

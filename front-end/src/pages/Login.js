@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export const Login = () => {
+export const Login = ({activeUser, setActiveUser}) => {
     const [user, login]=useState({
         email:"",
         password:""
@@ -25,14 +25,14 @@ export const Login = () => {
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
-        }).then((e) => {
-            if(e.status===401){
-                alert("Unauthorized");
-            }
-            else{
-                alert("Authorized");
-            }
-        }).catch((e) => alert(e.body));
+        }).then((data)=>data.json()).then((d)=>{
+            console.log(d)
+            const name=d.name;
+            const id=d.pid;
+            const type="patient";
+            setActiveUser({type:type, id: id, name:name});
+            
+        }).catch((e) => console.log(e));
 
     }
 
