@@ -1,7 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-export const Header = ({activeUser, setActiveUser}) => {
+export const Header = () => {
+    const id=sessionStorage.getItem("id");
+    const navigate=useNavigate();
+    function logout(){
+        sessionStorage.removeItem("name");
+        sessionStorage.removeItem("type");
+        sessionStorage.removeItem("id");
+        //setActiveUser({ type: null, id: null, name: null });
+        navigate('/', {replace:true});
+    }
     return (
         <div >
             <nav className="navbar header text-white">
@@ -10,14 +19,14 @@ export const Header = ({activeUser, setActiveUser}) => {
                         <span className="navbar-brand mb-0 h1 ms-5 text-white">Health Hub</span>
                     </Link>
                     {
-                        activeUser.id == null ?
+                        id == null ?
                             <div className='d-flex flex-row'>
                                 <Link to='/login' className='p-2 nav-link'>Login</Link>
                                 <Link to='/register' className='p-2 nav-link'>Register</Link>
                             </div> :
                             <div>
-                                <p>{activeUser.name}</p>
-                                <button onClick={()=>setActiveUser({ type: null, id: null, name: null})}>Logout</button> 
+                                <p>{sessionStorage.getItem("name")}</p>
+                                <button onClick={logout} >Logout</button> 
                             </div>
                     }
                 </div>

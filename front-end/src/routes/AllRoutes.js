@@ -1,14 +1,17 @@
 import React from 'react'
 import { Routes, Route } from "react-router-dom";
-import { Home, Login, Register, PageNotFound } from '../pages';
-export const AllRoutes = ({activeUser,setActiveUser}) => {
+import { Home, Login, Register, PageNotFound, FindDoctor, History } from '../pages';
+import { PatientPage } from '../pages/PatientPage';
+export const AllRoutes = () => {
     return (
         <div>
             <Routes>
                 <Route path="/" element={<Home/>} />
-                <Route path="/login" element={<Login activeUser={activeUser} setActiveUser={setActiveUser} />} />
-                <Route path="/register" element={<Register activeUser={activeUser} setActiveUser={setActiveUser} />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path='patient' element={<PatientPage />} />
                 <Route path="*" element={<PageNotFound />} />
+                
             </Routes>
         </div>
     )

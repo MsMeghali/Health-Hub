@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export const Register = ({ activeUser, setActiveUser }) => {
+export const Register = () => {
     const [user, doRegister]=useState({
         email:"",
         password:"",
@@ -56,7 +56,10 @@ export const Register = ({ activeUser, setActiveUser }) => {
         }).then(e=>e.text()).then(e=>{
             alert(e);
             if (e ==="Successfully registered"){
-                setActiveUser({ type: "patient", id: user.pid, name: user.name })
+                sessionStorage.setItem("name", user.nameame);
+                sessionStorage.setItem("type", "patient");
+                sessionStorage.setItem("id", user.pid);
+               // setActiveUser({ type: "patient", id: user.pid, name: user.name })
             }
         });
 
