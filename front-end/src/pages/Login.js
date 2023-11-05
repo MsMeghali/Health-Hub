@@ -30,16 +30,20 @@ export const Login = () => {
         })
             .then((d) => d.json())
             .then((d) => {
-                //console.log(d)
-                const name = d.name;
-                const id = d.pid;
-                const type = "patient";
-                //setActiveUser({ type: type, id: id, name: name });
-                sessionStorage.setItem("name",name);
-                sessionStorage.setItem("type",type);
-                sessionStorage.setItem("id",id);
-                navigate("/patient", {state:{id:id}});
-
+                if(d.did){
+                    const name = d.name;
+                    const id = d.pid;
+                    sessionStorage.setItem("name", name);
+                    sessionStorage.setItem("id", id);
+                    navigate("/doctor");
+                }
+                else{
+                    const name = d.name;
+                    const id = d.pid;
+                    sessionStorage.setItem("name", name);
+                    sessionStorage.setItem("id", id);
+                    navigate("/patient");
+                }
             })
             .catch((e) => alert(e.name));
 

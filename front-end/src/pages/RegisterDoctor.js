@@ -1,0 +1,112 @@
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+
+export const RegisterDoctor = () => {
+    const navigate = useNavigate();
+    const [user, doRegister] = useState({
+        email: "",
+        password: "",
+        did: "",
+        name: "",
+        mobile: "",
+        aadhar: "",
+        address: "",
+        city: "",
+        speciality: ""
+    })
+    function handleInput(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        if (name === "email") {
+            doRegister({ ...user, email: value });
+        }
+        if (name === "password") {
+            doRegister({ ...user, password: value });
+        }
+        if (name === "did") {
+            doRegister({ ...user, did: value });
+        }
+        if (name === "name") {
+            doRegister({ ...user, name: value });
+        }
+        if (name === "mobile") {
+            doRegister({ ...user, mobile: value });
+        }
+        if (name === "aadhar") {
+            doRegister({ ...user, aadhar: value });
+        }
+        if (name === "address") {
+            doRegister({ ...user, address: value });
+        }
+        if (name === "city") {
+            doRegister({ ...user, city: value });
+        }
+        if (name === "speciality") {
+            doRegister({ ...user, dob: value });
+        }
+    }
+    function handleRegister(e) {
+        e.preventDefault();
+        console.log(user)
+        fetch("http://localhost:8080/health-hub/register/doctor", {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        }).then(e => e.text()).then(e => {
+            alert(e);
+            if (e === "Successfully registered") {
+                navigate("/login");
+            }
+        });
+
+    }
+    return (
+        <div className=' pages'>
+            <form className="row g-3 mx-auto my-auto w-50 text-white">
+                <div className="col-md-6">
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input type="email" className="form-control" id="email" name="email" placeholder="Email" onChange={(e) => handleInput(e)} />
+                </div>
+                <div className="col-md-6">
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input type="password" className="form-control" id="password" name="password" placeholder="Password" onChange={(e) => handleInput(e)} />
+                </div>
+                <div className="col-md-6">
+                    <label htmlFor="pid" className="form-label">Doctor ID</label>
+                    <input type="text" className="form-control" id="did" name="did" placeholder="Doctor ID" onChange={(e) => handleInput(e)} />
+                </div>
+                <div className="col-md-6">
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <input type="text" className="form-control" id="name" name="name" placeholder="Name" onChange={(e) => handleInput(e)} />
+                </div>
+                <div className="col-md-6">
+                    <label htmlFor="mobile" className="form-label">Mobile</label>
+                    <input type="text" className="form-control" id="mobile" name="mobile" placeholder="Mobile" onChange={(e) => handleInput(e)} />
+                </div>
+                <div className="col-md-6">
+                    <label htmlFor="aadhar" className="form-label">Aadhar</label>
+                    <input type="text" className="form-control" id="aadhar" name="aadhar" placeholder="Aadhar" onChange={(e) => handleInput(e)} />
+                </div>
+                <div className="col-12">
+                    <label htmlFor="address" className="form-label">Address</label>
+                    <input type="text" className="form-control" id="address" name="address" placeholder="House no, Street" onChange={(e) => handleInput(e)} />
+                </div>
+                <div className="col-md-6">
+                    <label htmlFor="city" className="form-label">City</label>
+                    <input type="text" className="form-control" id="city" name="city" placeholder="City" onChange={(e) => handleInput(e)} />
+                </div>
+                <div className="col-md-6">
+                    <label htmlFor="dob" className="form-label">Speciality</label>
+                    <input type="text" className="form-control" id="speciality" name="speciality" placeholder="Speciality" onChange={(e) => handleInput(e)} />
+                </div>
+                <div className="col-12">
+                    <button type="submit" className="btn btn-primary" onClick={(e) => handleRegister(e)}>Sign in</button>
+                </div>
+            </form>
+        </div>
+    )
+}
+

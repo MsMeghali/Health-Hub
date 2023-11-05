@@ -4,6 +4,7 @@ import com.example.healthhub.dto.PatientConsultationDto;
 import com.example.healthhub.entity.Consultation;
 import com.example.healthhub.entity.Doctor;
 import com.example.healthhub.entity.Patient;
+import com.example.healthhub.pojos.PatientConsultations;
 import com.example.healthhub.repository.ConsultationRepository;
 import com.example.healthhub.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,12 @@ public class PatientService {
                 map.put(c.getDoctor(), list);
             }
         });
-        List<Consultation> patientConsultations = new ArrayList<>();
-        for (Doctor d : map.keySet()) {
-            patientConsultations.addAll(map.get(d));
+        List<PatientConsultations> patientConsultations = new ArrayList<>();
+        for(Doctor d: map.keySet()){
+            List<Consultation> c=map.get(d);
+            for(Consultation c2:c){
+                patientConsultations.add(new PatientConsultations(d,c2));
+            }
         }
         return new PatientConsultationDto(patient, patientConsultations);
     }
